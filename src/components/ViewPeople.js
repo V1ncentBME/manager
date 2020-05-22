@@ -1,14 +1,14 @@
 // 查看人员信息详情
 import React from "react";
-import { Descriptions, Button } from "antd";
+import { Descriptions, Button, Row } from "antd";
 
 class ViewPeople extends React.Component {
   render() {
-    const { person, index, onEdit, onDelete, setModalVisible } = this.props;
+    const { person, onEdit, setModalVisible } = this.props;
 
     return (
-      <div>
-        <Descriptions layout="vertical">
+      <Row justify="space-around" align="middle" style={{ margin: 50 }}>
+        <Descriptions column={1}>
           <Descriptions.Item label="编号">
             {person.Code || ""}
           </Descriptions.Item>
@@ -41,16 +41,15 @@ class ViewPeople extends React.Component {
         <Button type="primary" onClick={onEdit}>
           编辑
         </Button>
-        <Button
+        {/* <Button
           type="primary"
           onClick={() => {
-            onDelete(index);
             setModalVisible();
           }}
         >
-          删除
-        </Button>
-      </div>
+          关闭
+        </Button> */}
+      </Row>
     );
   }
 }

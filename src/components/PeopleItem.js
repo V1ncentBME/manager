@@ -1,7 +1,9 @@
 // 单个人员信息
 import React from "react";
-import { Descriptions, Button } from "antd";
+import { Descriptions, Button, Modal } from "antd";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import Popup from "./Popup";
+const { confirm } = Modal;
 
 class PeopleItem extends React.Component {
   constructor(props) {
@@ -17,18 +19,36 @@ class PeopleItem extends React.Component {
     this.setState({ modalVisible });
   }
   render() {
-    const modalVisible = this.state.modalVisible;
+    const { modalVisible } = this.state;
     const { person, index, handleEdit, handleDelete } = this.props;
+
+    function showConfirm() {
+      confirm({
+        okText: "确认",
+        cancelText: "取消",
+        icon: <ExclamationCircleOutlined />,
+        content: "确定要删除该人员信息吗？",
+        onOk() {
+          handleDelete(index);
+        },
+        onCancel() {},
+      });
+    }
 
     return (
       <div>
-        <Descriptions column={4}>
+        <Descriptions column={5}>
           <Descriptions.Item label="编号">{person.Code}</Descriptions.Item>
           <Descriptions.Item label="姓名">{person.UserName}</Descriptions.Item>
           <Descriptions.Item label="性别">{person.Gender}</Descriptions.Item>
           <Descriptions.Item>
             <Button type="primary" onClick={() => this.setModalVisible(true)}>
               查看
+            </Button>
+          </Descriptions.Item>
+          <Descriptions.Item>
+            <Button type="primary" onClick={showConfirm}>
+              删除
             </Button>
           </Descriptions.Item>
         </Descriptions>

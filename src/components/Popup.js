@@ -18,6 +18,7 @@ class Popup extends React.Component {
     const {
       person,
       index,
+
       addable,
       handleAdd,
       handleEdit,
@@ -25,9 +26,10 @@ class Popup extends React.Component {
       modalVisible,
       setModalVisible,
     } = this.props;
-    // 新增人员信息弹框
+
     if (addable) {
       return (
+        // 新增人员信息弹框
         <Modal
           title=""
           centered
@@ -41,9 +43,9 @@ class Popup extends React.Component {
           />
         </Modal>
       );
-      // 编辑人员信息弹框
     } else if (editable) {
       return (
+        // 编辑人员信息弹框
         <Modal
           title=""
           centered
@@ -60,9 +62,9 @@ class Popup extends React.Component {
           />
         </Modal>
       );
-      // 查看和删除人员信息弹框
     } else {
       return (
+        // 查看人员信息弹框
         <Modal
           title=""
           centered

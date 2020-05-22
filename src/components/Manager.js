@@ -3,43 +3,44 @@ import React from "react";
 import { Button } from "antd";
 import PeopleList from "./PeopleList";
 import Popup from "./Popup";
+import axios from "axios";
 
 //人员信息数据
-const people = [
-  {
-    Code: "1",
-    UserName: "张三",
-    Gender: "男",
-    Status: "在职",
-    IDNo: "",
-    Mail: "zhangsan@supcon.com",
-    Telephone: "18888888888",
-    Address: "浙江省杭州市滨江区六合路",
-    Remark: "",
-  },
-  {
-    Code: "2",
-    UserName: "李四",
-    Gender: "女",
-    Status: "离职",
-    IDNo: "",
-    Mail: "lisi@supcon.com",
-    Telephone: "18666666666",
-    Address: "浙江省杭州市滨江区六合路",
-    Remark: "",
-  },
-  {
-    Code: "3",
-    UserName: "王五",
-    Gender: "男",
-    Status: "在职",
-    IDNo: "",
-    Mail: "wangwu@supcon.com",
-    Telephone: "18666666666",
-    Address: "浙江省杭州市滨江区六合路",
-    Remark: "",
-  },
-];
+// const people = [
+//   {
+//     Code: "1",
+//     UserName: "张三",
+//     Gender: "男",
+//     Status: "在职",
+//     IDNo: "",
+//     Mail: "zhangsan@supcon.com",
+//     Telephone: "18888888888",
+//     Address: "浙江省杭州市滨江区六合路",
+//     Remark: "",
+//   },
+//   {
+//     Code: "2",
+//     UserName: "李四",
+//     Gender: "女",
+//     Status: "离职",
+//     IDNo: "",
+//     Mail: "lisi@supcon.com",
+//     Telephone: "18666666666",
+//     Address: "浙江省杭州市滨江区六合路",
+//     Remark: "",
+//   },
+//   {
+//     Code: "3",
+//     UserName: "王五",
+//     Gender: "男",
+//     Status: "在职",
+//     IDNo: "",
+//     Mail: "wangwu@supcon.com",
+//     Telephone: "18666666666",
+//     Address: "浙江省杭州市滨江区六合路",
+//     Remark: "",
+//   },
+// ];
 
 class Manager extends React.Component {
   constructor(props) {
@@ -49,8 +50,12 @@ class Manager extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({
-      people: people,
+    let people;
+    axios.get("/get/people").then((res) => {
+      people = res.data.people;
+      this.setState({
+        people: people,
+      });
     });
   }
 
@@ -90,6 +95,11 @@ class Manager extends React.Component {
 
     return (
       <div>
+        <PeopleList
+          people={people}
+          handleEdit={(e, i) => this.handleEdit(e, i)}
+          handleDelete={(i) => this.handleDelete(i)}
+        />
         <Button
           type="primary"
           onClick={() => {
@@ -98,11 +108,6 @@ class Manager extends React.Component {
         >
           新增人员
         </Button>
-        <PeopleList
-          people={people}
-          handleEdit={(e, i) => this.handleEdit(e, i)}
-          handleDelete={(i) => this.handleDelete(i)}
-        />
         <Popup
           addable={addable}
           modalVisible={modalVisible}

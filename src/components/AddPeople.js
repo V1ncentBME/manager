@@ -1,6 +1,7 @@
 // 新增人员信息
 import React from "react";
-import { Descriptions, Input, Button } from "antd";
+import { Descriptions, Input, Button, Select, Row } from "antd";
+const { Option } = Select;
 
 class AddPeople extends React.Component {
   constructor(props) {
@@ -15,7 +16,14 @@ class AddPeople extends React.Component {
     const person = Object.assign({}, this.state.person, {
       [e.target.name]: e.target.value,
     });
-
+    this.setState({
+      person: person,
+    });
+  }
+  selectChange(name, value) {
+    const person = Object.assign({}, this.state.person, {
+      [name]: value,
+    });
     this.setState({
       person: person,
     });
@@ -26,10 +34,11 @@ class AddPeople extends React.Component {
     const { handleAdd, quitAdd } = this.props;
 
     return (
-      <div>
-        <Descriptions layout="vertical">
+      <Row justify="space-around" align="middle" style={{ margin: 50 }}>
+        <Descriptions column={1}>
           <Descriptions.Item label="编号">
             <Input
+              style={{ width: 320 }}
               name="Code"
               value={person.Code || ""}
               onChange={this.inputChange}
@@ -37,27 +46,36 @@ class AddPeople extends React.Component {
           </Descriptions.Item>
           <Descriptions.Item label="姓名">
             <Input
+              style={{ width: 320 }}
               name="UserName"
               value={person.UserName || ""}
               onChange={this.inputChange}
             />
           </Descriptions.Item>
           <Descriptions.Item label="性别">
-            <Input
-              name="Gender"
-              value={person.Gender || ""}
-              onChange={this.inputChange}
-            />
+            <Select
+              style={{ width: 320 }}
+              defaultValue={person.Gender || ""}
+              onChange={this.selectChange.bind(this, "Gender")}
+            >
+              <Option value="男">男</Option>
+              <Option value="女">女</Option>
+            </Select>
           </Descriptions.Item>
           <Descriptions.Item label="状态">
-            <Input
-              name="Status"
-              value={person.Status || ""}
-              onChange={this.inputChange}
-            />
+            <Select
+              style={{ width: 320 }}
+              defaultValue={person.Status || ""}
+              onChange={this.selectChange.bind(this, "Status")}
+            >
+              <Option value="新增">新增</Option>
+              <Option value="在职">在职</Option>
+              <Option value="离职">离职</Option>
+            </Select>
           </Descriptions.Item>
           <Descriptions.Item label="身份证号">
             <Input
+              style={{ width: 292 }}
               name="IDNo"
               value={person.IDNo || ""}
               onChange={this.inputChange}
@@ -65,6 +83,7 @@ class AddPeople extends React.Component {
           </Descriptions.Item>
           <Descriptions.Item label="邮箱">
             <Input
+              style={{ width: 320 }}
               name="Mail"
               value={person.Mail || ""}
               onChange={this.inputChange}
@@ -72,6 +91,7 @@ class AddPeople extends React.Component {
           </Descriptions.Item>
           <Descriptions.Item label="手机">
             <Input
+              style={{ width: 320 }}
               name="Telephone"
               value={person.Telephone || ""}
               onChange={this.inputChange}
@@ -79,6 +99,7 @@ class AddPeople extends React.Component {
           </Descriptions.Item>
           <Descriptions.Item label="联系地址">
             <Input
+              style={{ width: 292 }}
               name="Address"
               value={person.Address || ""}
               onChange={this.inputChange}
@@ -86,6 +107,7 @@ class AddPeople extends React.Component {
           </Descriptions.Item>
           <Descriptions.Item label="备注">
             <Input
+              style={{ width: 320 }}
               name="Remark"
               value={person.Remark || ""}
               onChange={this.inputChange}
@@ -108,7 +130,7 @@ class AddPeople extends React.Component {
         >
           取消
         </Button>
-      </div>
+      </Row>
     );
   }
 }
